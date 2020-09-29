@@ -148,6 +148,10 @@ public class FreeCam : MonoBehaviour
                         if(selected.Contains(objectHit.gameObject))
                         {
                             selected.Remove(objectHit.gameObject);
+                            if(objectHit.tag == "Pig")
+                            {
+                                objectHit.GetComponent<NavMeshAgent>().isStopped = true;
+                            }
                         }
                         else
                         {
@@ -160,6 +164,16 @@ public class FreeCam : MonoBehaviour
                         selected.Clear();
                         selected.Add(objectHit);
                         selectedTag = objectHit.tag;
+                    }
+                }
+                else
+                {
+                    if(selectedTag == "Pig")
+                    {
+                        foreach(var agent in selected)
+                        {
+                            agent.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+                        }
                     }
                 }
 
